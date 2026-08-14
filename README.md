@@ -1,4 +1,6 @@
-
+<p align="center">
+  <img src="./assets/readme/hero.svg" width="100%" alt="Asuswrt-Merlin Internet-o-metr: замер WAN-скорости на роутере через Яндекс CDN или региональный iperf3">
+</p>
 
 Аддон для [Asuswrt-Merlin](https://www.asuswrt-merlin.net/): вкладка **Интернетометр** в WebUI. Замер идёт **на WAN роутера**, не в браузере ПК.
 
@@ -17,8 +19,9 @@
 | iPerf     | нужен `iperf3` (`opkg install iperf3`)                                                      |
 | Хуки      | `#internetometr` ([Addons API](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Addons-API)) |
 
-
-
+<p align="center">
+  <img src="./assets/readme/workflow.svg" width="100%" alt="Порядок замера: сервер, download, upload, ping. Yandex через CDN, iperf3 через выбранный хост и порт">
+</p>
 
 ## Что умеет
 

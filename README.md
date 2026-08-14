@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./assets/readme/hero.svg" width="100%" alt="Asuswrt-Merlin Internet-o-metr: замер WAN-скорости на роутере через Яндекс CDN или региональный iperf3">
-</p>
+
 
 Аддон для [Asuswrt-Merlin](https://www.asuswrt-merlin.net/): вкладка **Интернетометр** в WebUI. Замер идёт **на WAN роутера**, не в браузере ПК.
 
@@ -10,18 +8,17 @@
 - **iPerf3** — TCP к публичным серверам ЭР-Телеком, МТС, Hostkey и др., с выбором региона
 
 
-| | |
-|---|---|
-| Версия | **1.1.0** |
-| Платформа | Asuswrt-Merlin `384.15+` / `3004+` / `3006+` |
-| Проверено | GT-AX11000 (ROG) |
-| Yandex | штатный `curl` + BusyBox, Entware не нужен |
-| iPerf | нужен `iperf3` (`opkg install iperf3`) |
-| Хуки | `#internetometr` ([Addons API](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Addons-API)) |
+|           |                                                                                             |
+| --------- | ------------------------------------------------------------------------------------------- |
+| Версия    | **1.1.0**                                                                                   |
+| Платформа | Asuswrt-Merlin `384.15+` / `3004+` / `3006+`                                                |
+| Проверено | GT-AX11000 (ROG)                                                                            |
+| Yandex    | штатный `curl` + BusyBox, Entware не нужен                                                  |
+| iPerf     | нужен `iperf3` (`opkg install iperf3`)                                                      |
+| Хуки      | `#internetometr` ([Addons API](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Addons-API)) |
 
-<p align="center">
-  <img src="./assets/readme/workflow.svg" width="100%" alt="Порядок замера: сервер, download, upload, ping. Yandex через CDN, iperf3 через выбранный хост и порт">
-</p>
+
+
 
 ## Что умеет
 
@@ -29,6 +26,8 @@
 - Download, Upload, ping и внешний IPv4
 - каталог региональных iperf-серверов
 - CLI: `install` / `uninstall` / `remount` / `run` / `run iperf <id>` / `version`
+
+
 
 ## Установка
 
@@ -40,10 +39,7 @@
 scp -O -P <PORT> asuswrt-merlin-internetometr.tar.gz user@<IP>:/tmp/
 ```
 
-На роутере (если стояла старая сборка `yandexspeed` — сначала удалите её):
-
 ```sh
-[ -x /jffs/scripts/yandexspeed ] && /jffs/scripts/yandexspeed uninstall
 cd /tmp
 rm -rf /jffs/addons/internetometr
 tar -xzf asuswrt-merlin-internetometr.tar.gz -C /jffs/addons
@@ -66,6 +62,8 @@ opkg install iperf3
 ```sh
 sh build.tar.sh
 ```
+
+
 
 ## Обновление и удаление
 
@@ -91,6 +89,8 @@ chmod 0755 /jffs/scripts/internetometr
 /jffs/scripts/internetometr remount
 ```
 
+
+
 ## CLI
 
 ```sh
@@ -100,12 +100,16 @@ chmod 0755 /jffs/scripts/internetometr
 /jffs/scripts/internetometr remount
 ```
 
-| Путь | Назначение |
-|------|------------|
-| `/www/user/internetometr/result.json` | последний результат |
-| `/www/user/internetometr/status.json` | прогресс для UI |
-| `/www/user/internetometr/request.json` | engine / server_id |
-| `/tmp/internetometr.log` | лог |
+
+| Путь                                   | Назначение          |
+| -------------------------------------- | ------------------- |
+| `/www/user/internetometr/result.json`  | последний результат |
+| `/www/user/internetometr/status.json`  | прогресс для UI     |
+| `/www/user/internetometr/request.json` | engine / server_id  |
+| `/tmp/internetometr.log`               | лог                 |
+
+
+
 
 ## Ограничения
 

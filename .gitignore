@@ -1,0 +1,5 @@
+dist/
+asuswrt-merlin-internetometr.tar.gz
+asuswrt-merlin-yandexspeed.tar.gz
+*.log
+.DS_Store

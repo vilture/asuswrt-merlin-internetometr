@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380" role="img" aria-labelledby="title desc">
+  <title id="title">Asuswrt-Merlin Internet-o-metr</title>
+  <desc id="desc">Merlin addon: WAN speed on the router via Yandex CDN or regional iperf3.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#161B1E"/>
+      <stop offset="1" stop-color="#252C31"/>
+    </linearGradient>
+    <clipPath id="card">
+      <rect width="1200" height="380" rx="26"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="1200" height="380" fill="url(#bg)"/>
+    <rect width="10" height="380" fill="#C41E3A"/>
+  </g>
+  <rect x="1" y="1" width="1198" height="378" rx="25" fill="none" stroke="#6B8FA3" stroke-width="1.5"/>
+  <g id="title-block" transform="translate(56 46)">
+    <text x="0" y="22" fill="#8A9BA8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" letter-spacing="2.2">ASUSWRT-MERLIN ADDON | v1.1.0</text>
+    <text x="0" y="92" fill="#F4F1EA" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="52" font-weight="700">Internet-o-metr</text>
+    <text x="0" y="138" fill="#FFCC00" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22">WAN speed measured on the router</text>
+    <text x="0" y="176" fill="#C5D0D6" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20">Two engines: Yandex CDN and regional iperf3.</text>
+    <text x="0" y="206" fill="#C5D0D6" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="20">WebUI: Adaptive QoS - Internatometer</text>
+    <g transform="translate(0 236)">
+      <rect width="168" height="36" rx="6" fill="#2A3338" stroke="#6B8FA3"/>
+      <text x="84" y="24" text-anchor="middle" fill="#FFCC00" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">YANDEX CDN</text>
+      <rect x="180" width="168" height="36" rx="6" fill="#2A3338" stroke="#6B8FA3"/>
+      <text x="264" y="24" text-anchor="middle" fill="#7FDBDA" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">IPERF3</text>
+      <rect x="360" width="188" height="36" rx="6" fill="#2A3338" stroke="#6B8FA3"/>
+      <text x="454" y="24" text-anchor="middle" fill="#F4F1EA" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">GT-AX11000</text>
+    </g>
+  </g>
+  <g id="project-proof" transform="translate(760 46)">
+    <rect width="384" height="288" rx="14" fill="#2F3A3E" stroke="#6B8FA3"/>
+    <rect width="384" height="40" rx="14" fill="#3D4A4F"/>
+    <rect y="26" width="384" height="14" fill="#3D4A4F"/>
+    <text x="20" y="27" fill="#F4F1EA" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="16" font-weight="600">Internatometer</text>
+    <circle cx="348" cy="20" r="5" fill="#FFCC00"/>
+    <text x="24" y="78" fill="#8A9BA8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">DOWNLOAD</text>
+    <text x="360" y="78" text-anchor="end" fill="#FFCC00" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="28" font-weight="700">Mbps</text>
+    <text x="24" y="132" fill="#8A9BA8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">UPLOAD</text>
+    <text x="360" y="132" text-anchor="end" fill="#FFCC00" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="28" font-weight="700">Mbps</text>
+    <text x="24" y="186" fill="#8A9BA8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">PING</text>
+    <text x="360" y="186" text-anchor="end" fill="#FFCC00" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="28" font-weight="700">ms</text>
+    <rect x="24" y="214" width="336" height="8" rx="4" fill="#1A2226"/>
+    <rect x="24" y="214" width="210" height="8" rx="4" fill="#FFCC00"/>
+    <text x="24" y="258" fill="#8A9BA8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">WAN | ROUTER | NOT BROWSER</text>
+  </g>
+</svg>

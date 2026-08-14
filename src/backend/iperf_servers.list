@@ -1,0 +1,41 @@
+# id|region|label|host|ports
+# Сибирь и Дальний Восток
+nsk_er|Сибирь и Дальний Восток|Новосибирск (ЭР-Телеком)|st.nsk.ertelecom.ru|5201-5209
+krsk_er|Сибирь и Дальний Восток|Красноярск (ЭР-Телеком)|st.krsk.ertelecom.ru|5201-5207,5209
+omsk_er|Сибирь и Дальний Восток|Омск (ЭР-Телеком)|st.omsk.ertelecom.ru|5201-5209
+tomsk_er|Сибирь и Дальний Восток|Томск (ЭР-Телеком)|st.tomsk.ertelecom.ru|5201,5203-5209
+barnaul_er|Сибирь и Дальний Восток|Барнаул (ЭР-Телеком)|st.barnaul.ertelecom.ru|5201-5202,5204-5209
+irkutsk_er|Сибирь и Дальний Восток|Иркутск (ЭР-Телеком)|st.irkutsk.ertelecom.ru|5201-5209
+nk_er|Сибирь и Дальний Восток|Новокузнецк (ЭР-Телеком)|st.nk.ertelecom.ru|5201-5209
+# Урал
+ekat_er|Урал|Екатеринбург (ЭР-Телеком)|st.ekat.ertelecom.ru|5201-5209
+tum_mts|Урал|Тюмень (МТС)|tumst.st.mtsws.net|3333
+tmn_er|Урал|Тюмень (ЭР-Телеком)|st.tmn.ertelecom.ru|5201-5209
+mgn_er|Урал|Челябинск / Магнитогорск (ЭР-Телеком)|st.mgn.ertelecom.ru|5201-5209
+kurgan_er|Урал|Курган (ЭР-Телеком)|st.kurgan.ertelecom.ru|5201-5205,5207-5209
+# Поволжье
+kaz_mts|Поволжье|Казань (МТС)|kazst.st.mtsws.net|3333
+kzn_er|Поволжье|Казань (ЭР-Телеком)|st.kzn.ertelecom.ru|5201-5209
+samara_er|Поволжье|Самара (ЭР-Телеком)|st.samara.ertelecom.ru|5201-5209
+nn_er|Поволжье|Нижний Новгород (ЭР-Телеком)|st.nn.ertelecom.ru|5201-5209
+nn_vtt|Поволжье|Нижний Новгород (ВолгаТелеком)|speed-nn.vtt.net|5201-5209
+perm_er|Поволжье|Пермь (ЭР-Телеком)|st.perm.ertelecom.ru|5201-5205,5207-5209
+saratov_er|Поволжье|Саратов (ЭР-Телеком)|st.saratov.ertelecom.ru|5201-5209
+izhevsk_er|Поволжье|Ижевск (ЭР-Телеком)|st.izhevsk.ertelecom.ru|5201-5209
+oren_er|Поволжье|Оренбург (ЭР-Телеком)|st.oren.ertelecom.ru|5201-5209
+penza_er|Поволжье|Пенза (ЭР-Телеком)|st.penza.ertelecom.ru|5201-5209
+kirov_er|Поволжье|Киров (ЭР-Телеком)|st.kirov.ertelecom.ru|5201-5209
+chelny_er|Поволжье|Набережные Челны (ЭР-Телеком)|st.chelny.ertelecom.ru|5201-5209
+yola_er|Поволжье|Йошкар-Ола (ЭР-Телеком)|st.yola.ertelecom.ru|5201-5209
+# Центр и Северо-Запад
+msk_hostkey|Центр и Северо-Запад|Москва (Hostkey)|spd-rudp.hostkey.ru|5201-5209
+spb_er|Центр и Северо-Запад|Санкт-Петербург (ЭР-Телеком)|st.spb.ertelecom.ru|5201-5209
+ryazan_er|Центр и Северо-Запад|Рязань (ЭР-Телеком)|st.ryazan.ertelecom.ru|5201-5209
+tula_er|Центр и Северо-Запад|Тула (ЭР-Телеком)|st.tula.ertelecom.ru|5201-5209
+tver_er|Центр и Северо-Запад|Тверь (ЭР-Телеком)|st.tver.ertelecom.ru|5201-5209
+kursk_er|Центр и Северо-Запад|Курск (ЭР-Телеком)|st.kursk.ertelecom.ru|5201-5209
+lipetsk_er|Центр и Северо-Запад|Липецк (ЭР-Телеком)|st.lipetsk.ertelecom.ru|5201-5209
+bryansk_er|Центр и Северо-Запад|Брянск (ЭР-Телеком)|st.bryansk.ertelecom.ru|5201-5209
+# Юг
+rostov_er|Юг|Ростов-на-Дону (ЭР-Телеком)|st.rostov.ertelecom.ru|5201-5209
+volgograd_er|Юг|Волгоград (ЭР-Телеком)|st.volgograd.ertelecom.ru|5201-5209

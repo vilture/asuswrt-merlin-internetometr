@@ -1,0 +1,232 @@
+#!/bin/sh
+# Internet-o-metr - Asuswrt-Merlin addon CLI
+# Usage: internetometr {install|uninstall|mount|unmount|remount|run|service_event}
+
+ADDON_TAG="internetometr"
+
+if [ -f "/jffs/addons/${ADDON_TAG}/_globals.sh" ] || [ -f "/jffs/addons/${ADDON_TAG}/backend/_globals.sh" ]; then
+	ADDON_DIR="/jffs/addons/${ADDON_TAG}"
+elif [ -n "$0" ] && [ -f "$(dirname "$0")/backend/_globals.sh" ]; then
+	ADDON_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
+elif [ -n "$0" ] && [ -f "$(dirname "$0")/_globals.sh" ]; then
+	ADDON_DIR="$(CDPATH= cd -- "$(dirname "$0")" && pwd)"
+else
+	ADDON_DIR="/jffs/addons/${ADDON_TAG}"
+fi
+
+# BusyBox ash exits on failed `. file` - test -f before sourcing.
+ys_source_modules() {
+	local base="$1"
+	if [ ! -f "${base}/_globals.sh" ]; then
+		echo "Error: missing ${base}/_globals.sh" >&2
+		exit 1
+	fi
+	# shellcheck disable=SC1090
+	. "${base}/_globals.sh"
+	# shellcheck disable=SC1090
+	. "${base}/mount.sh"
+	# shellcheck disable=SC1090
+	. "${base}/install.sh"
+	# shellcheck disable=SC1090
+	. "${base}/run_speedtest.sh"
+	# shellcheck disable=SC1090
+	. "${base}/iperf_servers.sh"
+	# shellcheck disable=SC1090
+	. "${base}/run_iperf.sh"
+}
+
+if [ -f "${ADDON_DIR}/backend/_globals.sh" ]; then
+	ys_source_modules "${ADDON_DIR}/backend"
+elif [ -f "${ADDON_DIR}/_globals.sh" ]; then
+	ys_source_modules "${ADDON_DIR}"
+else
+	echo "Error: addon modules not found in ${ADDON_DIR}" >&2
+	exit 1
+fi
+
+ys_parse_amng_to_request() {
+	local amng engine server_id
+
+	amng=$(nvram get amng_custom 2>/dev/null)
+	amng=$(echo "$amng" | sed 's/&quot;/"/g; s/&#34;/"/g; s/[[:space:]]//g')
+	ys_log "amng_custom=${amng}"
+
+	engine="yandex"
+	server_id="nsk_er"
+
+	case "$amng" in
+		iperf:*)
+			engine="iperf"
+			server_id=${amng#iperf:}
+			;;
+		iperf\|*)
+			engine="iperf"
+			server_id=${amng#iperf|}
+			;;
+		yandex*)
+			engine="yandex"
+			server_id=""
+			;;
+		*\"engine\":\"iperf\"*|engine=iperf*|engine\":\"iperf*)
+			engine="iperf"
+			if echo "$amng" | grep -q 'server_id'; then
+				server_id=$(echo "$amng" \
+					| grep -oE 'server_id[[:space:]]*[:=][[:space:]]*["]*[A-Za-z0-9_]+' \
+					| head -1 \
+					| sed 's/.*[=:]["]*//;s/"//g')
+			fi
+			;;
+		*)
+			# Empty/unknown: do not reuse a stale yandex request if UI asked iperf
+			# via leftover JSON. Default yandex only when nothing looks like iperf.
+			if echo "$amng" | grep -qi iperf; then
+				engine="iperf"
+			fi
+			;;
+	esac
+
+	[ -n "$server_id" ] || server_id="nsk_er"
+	ys_write_request "$engine" "$server_id"
+	ys_log "request engine=$engine server_id=$server_id"
+}
+
+ys_dispatch_run() {
+	local engine
+
+	engine=$(ys_read_request_engine)
+	case "$engine" in
+		iperf) ys_run_iperf ;;
+		*) ys_run_speedtest ;;
+	esac
+}
+
+ys_request_from_service_args() {
+	local all="$*"
+	local ev="$2"
+	local sid=""
+
+	ys_log "service_args: $all"
+
+	case "$ev" in
+		internetometr_iperf_*)
+			sid=${ev#internetometr_iperf_}
+			sid=$(echo "$sid" | tr -cd 'A-Za-z0-9_')
+			[ -n "$sid" ] || sid="nsk_er"
+			ys_write_request "iperf" "$sid"
+			return 0
+			;;
+		internetometr)
+			ys_write_request "yandex" ""
+			return 0
+			;;
+	esac
+
+	if echo "$all" | grep -q "internetometr_iperf_"; then
+		sid=$(echo "$all" | grep -oE 'internetometr_iperf_[A-Za-z0-9_]+' | head -1)
+		sid=${sid#internetometr_iperf_}
+		[ -n "$sid" ] || sid="nsk_er"
+		ys_write_request "iperf" "$sid"
+		return 0
+	fi
+
+	ys_parse_amng_to_request
+}
+
+ys_service_event() {
+	local type="$1"
+	local event="$2"
+	local engine sid
+
+	echo "$*" | grep -q "$ADDON_TAG" || return 0
+
+	case "$type" in
+		stop|*stop*)
+			if [ -f "$ADDON_LOCK" ]; then
+				kill "$(cat "$ADDON_LOCK" 2>/dev/null)" 2>/dev/null
+				rm -f "$ADDON_LOCK"
+			fi
+			;;
+		restart|start)
+			ys_ensure_path
+			ys_log "service_event $type $event - starting speedtest"
+			ys_ensure_tmp
+			mkdir -p "$ADDON_WEB_DIR"
+			ln -sf "${ADDON_DIR}/internetometr.js" "${ADDON_WEB_DIR}/internetometr.js" 2>/dev/null
+			ln -sf "${ADDON_DIR}/iperf_servers.list" "${ADDON_WEB_DIR}/iperf_servers.list" 2>/dev/null
+			ys_request_from_service_args "$@"
+			engine=$(ys_read_request_engine)
+			sid=$(ys_read_request_server_id)
+			ys_write_status "running" "start" "Запуск ${engine} ${sid}..." 2
+			ys_dispatch_run &
+			;;
+		*)
+			ys_log "service_event ignore type=$type event=$event"
+			;;
+	esac
+	return 0
+}
+
+ys_cli_run() {
+	local mode="${1:-yandex}"
+	local sid="${2:-nsk_er}"
+
+	case "$mode" in
+		iperf)
+			ys_write_request "iperf" "$sid"
+			ys_run_iperf
+			;;
+		yandex|"")
+			ys_write_request "yandex" ""
+			ys_run_speedtest
+			;;
+		*)
+			# Treat first arg as server_id for convenience: run <server_id>
+			if ys_iperf_lookup "$mode"; then
+				ys_write_request "iperf" "$mode"
+				ys_run_iperf
+			else
+				echo "Usage: $0 run [yandex|iperf <server_id>]" >&2
+				return 1
+			fi
+			;;
+	esac
+}
+
+ys_usage() {
+	cat <<EOF
+Internet-o-metr ${ADDON_VERSION} - Merlin addon (Yandex + iperf3)
+
+Usage: $0 <command>
+
+Commands:
+  install       Install hooks and mount WebUI tab
+  uninstall     Remove hooks, UI, and addon files
+  mount         Mount WebUI tab
+  unmount       Unmount WebUI tab
+  remount       Remount WebUI tab
+  run           Run Yandex speed test (CLI)
+  run iperf ID  Run iperf3 test against server id (e.g. nsk_er)
+  service_event Internal: handle restart_internetometr
+  version       Print version
+EOF
+}
+
+cmd="${1:-}"
+shift 2>/dev/null || true
+
+case "$cmd" in
+	install) ys_install "$@" ;;
+	uninstall) ys_uninstall "$@" ;;
+	mount) ys_mount_ui "$@" ;;
+	unmount) ys_unmount_ui "$@" ;;
+	remount) ys_remount_ui "$@" ;;
+	run) ys_cli_run "$@" ;;
+	service_event) ys_service_event "$@" ;;
+	version) echo "$ADDON_VERSION" ;;
+	""|-h|--help|help) ys_usage ;;
+	*)
+		echo "Unknown command: $cmd"
+		ys_usage
+		exit 1
+		;;
+esac
